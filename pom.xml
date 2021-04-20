@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>deimoselleservice</groupId>
+	<artifactId>deimoselleservice</artifactId>
+	<packaging>war</packaging>
+	<version>2.3.5</version>
+	<name>deimoselleervice Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.crivano</groupId>
+			<artifactId>swaggerservlet</artifactId>
+			<version>1.38.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.crivano.blucservice</groupId>
+			<artifactId>blucservice-api</artifactId>
+			<version>1.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.crivano</groupId>
+					<artifactId>swaggerservlet</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.demoiselle.signer</groupId>
+			<artifactId>core</artifactId>
+			<version>3.6.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.demoiselle.signer</groupId>
+			<artifactId>policy-impl-cades</artifactId>
+			<version>3.6.4</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.demoiselle.signer</groupId> <artifactId>chain-icp-brasil</artifactId> 
+			<version>3.6.4</version> </dependency> -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+
+	<build>
+		<finalName>deimoselleservice</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Build-Time>${maven.build.timestamp}</Build-Time>
+							<Build-Label>${project.version}</Build-Label>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
