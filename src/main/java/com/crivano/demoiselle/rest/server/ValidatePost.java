@@ -1,6 +1,8 @@
-package com.crivano.deimoselle.rest.server;
+package com.crivano.demoiselle.rest.server;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.demoiselle.signer.core.extension.CertificateExtra;
 import org.demoiselle.signer.policy.impl.cades.SignatureInformations;
@@ -18,7 +20,7 @@ public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 
 	@Override
 	public String getContext() {
-		return "deimoselle-validate";
+		return "demoiselle-validate";
 	}
 
 	@Override
@@ -29,18 +31,24 @@ public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 		// Produce response
 
 		CAdESChecker checker = new CAdESChecker();
-		List<SignatureInformations> signaturesInfo = checker.checkSignatureByHash(
-				SignerAlgorithmEnum.SHA256withRSA.getOIDAlgorithmHash(), req.sha256, req.envelope);
+
+		Map<String, byte[]> hashes = new HashMap<>();
+		hashes.put(SignerAlgorithmEnum.SHA1withRSA.getOIDAlgorithmHash(), req.sha1);
+		hashes.put(SignerAlgorithmEnum.SHA256withRSA.getOIDAlgorithmHash(), req.sha256);
+//		hashes.put(SignerAlgorithmEnum.SHA512withRSA.getOIDAlgorithmHash(), calcSha512(fileToVerify));
+		List<SignatureInformations> signaturesInfo = checker.checkSignatureByHashes(hashes, req.envelope);
 
 		SignatureInformations si = signaturesInfo.get(0);
 
 		CertificateExtra ce = new CertificateExtra(si.getIcpBrasilcertificate().getX509Certificate());
 
 		resp.cn = si.getIcpBrasilcertificate().getName();
-		resp.policyoid = si.getSignaturePolicy().getSignPolicyInfo().getSignPolicyIdentifier().getValue();
-		String policy = recuperarNomePolitica(resp.policyoid);
-		resp.policy = policy.split(" ")[0];
-		resp.policyversion = policy.split(" ")[1].replace("v", "");
+		if (si.getSignaturePolicy() != null) {
+			resp.policyoid = si.getSignaturePolicy().getSignPolicyInfo().getSignPolicyIdentifier().getValue();
+			String policy = recuperarNomePolitica(resp.policyoid);
+			resp.policy = policy.split(" ")[0];
+			resp.policyversion = policy.split(" ")[1].replace("v", "");
+		}
 		if (si.getValidatorErrors() != null && si.getValidatorErrors().size() > 0)
 			resp.errormsg = si.getValidatorErrors().get(0);
 		resp.status = resp.errormsg == null ? "GOOD" : "INVALID_SIGN";

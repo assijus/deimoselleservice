@@ -1,5 +1,6 @@
-package com.crivano.deimoselle.rest.server;
+package com.crivano.demoiselle.rest.server;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.demoiselle.signer.core.extension.BasicCertificate;
@@ -16,11 +17,16 @@ public class CertificatePost implements ICertificatePost, ISwaggerCacheableMetho
 
 	@Override
 	public String getContext() {
-		return "deimoselle-certificate";
+		return "demoiselle-certificate";
 	}
 
 	@Override
 	public void run(CertificatePostRequest req, CertificatePostResponse resp) throws Exception {
+		certDetails(req, resp);
+	}
+
+	public static void certDetails(CertificatePostRequest req, CertificatePostResponse resp)
+			throws Exception, IOException {
 		BasicCertificate cb = new BasicCertificate(req.certificate);
 		CertificateExtra ce = new CertificateExtra(cb.getX509Certificate());
 

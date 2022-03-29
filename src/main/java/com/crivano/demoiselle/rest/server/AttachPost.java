@@ -1,4 +1,4 @@
-package com.crivano.deimoselle.rest.server;
+package com.crivano.demoiselle.rest.server;
 
 import com.crivano.blucservice.api.IBlueCrystal.AttachPostRequest;
 import com.crivano.blucservice.api.IBlueCrystal.AttachPostResponse;
@@ -8,7 +8,7 @@ public class AttachPost implements IAttachPost {
 
 	@Override
 	public String getContext() {
-		return "deimoselle-attach";
+		return "demoiselle-attach";
 	}
 
 	@Override

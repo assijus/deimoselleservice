@@ -2,11 +2,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>deimoselleservice</groupId>
-	<artifactId>deimoselleservice</artifactId>
+	<groupId>demoiselleservice</groupId>
+	<artifactId>demoiselleservice</artifactId>
 	<packaging>war</packaging>
 	<version>2.3.5</version>
-	<name>deimoselleervice Maven Webapp</name>
+	<name>demoiselleservice Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>com.crivano.blucservice</groupId>
 			<artifactId>blucservice-api</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.crivano</groupId>
@@ -30,14 +30,8 @@
 
 		<dependency>
 			<groupId>org.demoiselle.signer</groupId>
-			<artifactId>core</artifactId>
-			<version>3.6.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.demoiselle.signer</groupId>
 			<artifactId>policy-impl-cades</artifactId>
-			<version>3.6.4</version>
+			<version>4.1.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- <dependency> <groupId>org.demoiselle.signer</groupId> <artifactId>chain-icp-brasil</artifactId> 
@@ -57,11 +51,12 @@
 	</properties>
 
 	<build>
-		<finalName>deimoselleservice</finalName>
+		<finalName>demoiselleservice</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.1</version>
 				<configuration>
 					<archive>
 						<manifestEntries>
