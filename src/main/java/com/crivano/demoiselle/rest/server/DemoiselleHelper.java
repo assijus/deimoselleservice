@@ -158,33 +158,7 @@ public class DemoiselleHelper {
 		ordered.add(attributes.get(PKCSObjectIdentifiers.id_aa_ets_sigPolicyId));
 		ordered.add(attributes.get(PKCSObjectIdentifiers.id_aa_signingCertificateV2));
 
-//	       ASN1EncodableVector  v = new ASN1EncodableVector();
-//	        Enumeration          e = attributes.elements();
-//	        
-//	        while (e.hasMoreElements())
-//	        {
-//	            Object value = e.nextElement();
-//	            
-//	            if (value instanceof Vector)
-//	            {
-//	                Enumeration en = ((Vector)value).elements();
-//	                
-//	                while (en.hasMoreElements())
-//	                {
-//	                    v.add(Attribute.getInstance(en.nextElement()));
-//	                }
-//	            }
-//	            else
-//	            {
-//	                v.add(Attribute.getInstance(value));
-//	            }
-//	        }
-//	        
-//	        return v;
-
 		return ordered;
-//		return attributes.remove(CMSAttributes.cmsAlgorithmProtect);
-//		return attributes;
 	}
 
 	private static org.bouncycastle.asn1.x509.AlgorithmIdentifier algorithmByOID(String oid) {
