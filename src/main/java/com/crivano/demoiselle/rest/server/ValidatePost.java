@@ -7,7 +7,6 @@ import java.util.Map;
 import org.demoiselle.signer.core.extension.CertificateExtra;
 import org.demoiselle.signer.policy.impl.cades.SignatureInformations;
 import org.demoiselle.signer.policy.impl.cades.SignerAlgorithmEnum;
-import org.demoiselle.signer.policy.impl.cades.pkcs7.impl.CAdESChecker;
 
 import com.crivano.blucservice.api.IBlueCrystal.CertDetails;
 import com.crivano.blucservice.api.IBlueCrystal.IValidatePost;
@@ -28,15 +27,14 @@ public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 		// Date dtSign = javax.xml.bind.DatatypeConverter.parseDateTime(time)
 		// .getTime();
 
-		// Produce response
-
-		CAdESChecker checker = new CAdESChecker();
-
 		Map<String, byte[]> hashes = new HashMap<>();
 		hashes.put(SignerAlgorithmEnum.SHA1withRSA.getOIDAlgorithmHash(), req.sha1);
 		hashes.put(SignerAlgorithmEnum.SHA256withRSA.getOIDAlgorithmHash(), req.sha256);
 //		hashes.put(SignerAlgorithmEnum.SHA512withRSA.getOIDAlgorithmHash(), calcSha512(fileToVerify));
-		List<SignatureInformations> signaturesInfo = checker.checkSignatureByHashes(hashes, req.envelope);
+		System.out.println("antes");
+		List<SignatureInformations> signaturesInfo = DemoiselleHelper.checker.checkSignatureByHashes(hashes,
+				req.envelope);
+		System.out.println("depois");
 
 		SignatureInformations si = signaturesInfo.get(0);
 

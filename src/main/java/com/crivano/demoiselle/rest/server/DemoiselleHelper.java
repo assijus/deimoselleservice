@@ -33,15 +33,24 @@ import org.bouncycastle.cms.CMSTypedData;
 import org.bouncycastle.cms.DefaultSignedAttributeTableGenerator;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
+import org.demoiselle.signer.core.ca.manager.CAManagerConfiguration;
 import org.demoiselle.signer.core.util.MessagesBundle;
 import org.demoiselle.signer.policy.engine.factory.PolicyFactory.Policies;
 import org.demoiselle.signer.policy.impl.cades.SignerAlgorithmEnum;
 import org.demoiselle.signer.policy.impl.cades.SignerException;
+import org.demoiselle.signer.policy.impl.cades.pkcs7.impl.CAdESChecker;
 import org.demoiselle.signer.policy.impl.cades.pkcs7.impl.CAdESSigner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DemoiselleHelper {
+	
+	public static CAdESChecker checker = new CAdESChecker();
+	
+	static {
+		CAManagerConfiguration config = CAManagerConfiguration.getInstance();
+		config.setCached(true);
+	}
 
 	private static final Logger logger = LoggerFactory.getLogger(DemoiselleHelper.class);
 	private static MessagesBundle cadesMessagesBundle = new MessagesBundle();
