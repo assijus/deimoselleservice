@@ -1,3 +1,3 @@
-# deimoselleservice
+# demoiselleservice
 
-Webservice REST para chamar os métodos do Deimoselle Signer
+Webservice REST para chamar os métodos do Demoiselle Signer
