@@ -31,10 +31,8 @@ public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 		hashes.put(SignerAlgorithmEnum.SHA1withRSA.getOIDAlgorithmHash(), req.sha1);
 		hashes.put(SignerAlgorithmEnum.SHA256withRSA.getOIDAlgorithmHash(), req.sha256);
 //		hashes.put(SignerAlgorithmEnum.SHA512withRSA.getOIDAlgorithmHash(), calcSha512(fileToVerify));
-		System.out.println("antes");
 		List<SignatureInformations> signaturesInfo = DemoiselleHelper.checker.checkSignatureByHashes(hashes,
 				req.envelope);
-		System.out.println("depois");
 
 		SignatureInformations si = signaturesInfo.get(0);
 
