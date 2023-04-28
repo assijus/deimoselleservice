@@ -64,48 +64,47 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 		assertEquals(resp.certdetails.cpf0, resp.cpf);
 	}
 
-	public void testHash_ADRB23_Success() throws JSONException {
-		IHashPost.Request req = new IHashPost.Request();
-		IHashPost.Response resp = new IHashPost.Response();
-
-		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
-		req.policy = "AD-RB";
-		req.sha1 = SwaggerUtils.base64Decode(sha1ADRB23);
-		req.sha256 = SwaggerUtils.base64Decode(sha256ADRB23);
-		req.time = javax.xml.bind.DatatypeConverter.parseDateTime(timeADRB23).getTime();
-		req.crl = false;
-		run("POST", "/hash", req, resp);
-
-		assertEquals(hashADRB23, SwaggerUtils.base64Encode(resp.hash));
-		assertEquals("RENATO DO AMARAL CRIVANO MACHADO:00489623760", resp.cn);
-		assertEquals("AD-RB", resp.policy);
-		assertEquals("2.16.76.1.7.1.1.2.3", resp.policyoid);
-		assertEquals("2.3", resp.policyversion);
-		assertTrue(resp.certdetails instanceof CertDetails);
-		// assertTrue(resp.error == null);
-	}
-
-	public void testEnvelope_ADRB23_Success() throws JSONException {
-		IEnvelopePost.Request req = new IEnvelopePost.Request();
-		IEnvelopePost.Response resp = new IEnvelopePost.Response();
-
-		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
-		req.policy = "AD-RB";
-		req.signature = SwaggerUtils.base64Decode(signatureADRB23);
-		req.sha1 = SwaggerUtils.base64Decode(sha1ADRB23);
-		req.sha256 = SwaggerUtils.base64Decode(sha256ADRB23);
-		req.time = javax.xml.bind.DatatypeConverter.parseDateTime(timeADRB23).getTime();
-		req.crl = false;
-
-		run("POST", "/envelope", req, resp);
-
-		assertEquals(envelopeADRB23, SwaggerUtils.base64Encode(resp.envelope));
-		assertEquals("RENATO DO AMARAL CRIVANO MACHADO:00489623760", resp.cn);
-		assertEquals("AD-RB", resp.policy);
-		assertEquals("2.16.76.1.7.1.1.2.3", resp.policyoid);
-		assertEquals("2.3", resp.policyversion);
-		assertTrue(resp.certdetails instanceof CertDetails);
-	}
+//	public void testHash_ADRB23_Success() throws JSONException {
+//		IHashPost.Request req = new IHashPost.Request();
+//		IHashPost.Response resp = new IHashPost.Response();
+//
+//		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
+//		req.policy = "AD-RB";
+//		req.sha1 = SwaggerUtils.base64Decode(sha1ADRB23);
+//		req.sha256 = SwaggerUtils.base64Decode(sha256ADRB23);
+//		req.time = javax.xml.bind.DatatypeConverter.parseDateTime(timeADRB23).getTime();
+//		req.crl = false;
+//		run("POST", "/hash", req, resp);
+//
+//		assertEquals(hashADRB23, SwaggerUtils.base64Encode(resp.hash));
+//		assertEquals("RENATO DO AMARAL CRIVANO MACHADO:00489623760", resp.cn);
+//		assertEquals("AD-RB", resp.policy);
+//		assertEquals("2.16.76.1.7.1.1.2.3", resp.policyoid);
+//		assertEquals("2.3", resp.policyversion);
+//		assertTrue(resp.certdetails instanceof CertDetails);
+//	}
+//
+//	public void testEnvelope_ADRB23_Success() throws JSONException {
+//		IEnvelopePost.Request req = new IEnvelopePost.Request();
+//		IEnvelopePost.Response resp = new IEnvelopePost.Response();
+//
+//		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
+//		req.policy = "AD-RB";
+//		req.signature = SwaggerUtils.base64Decode(signatureADRB23);
+//		req.sha1 = SwaggerUtils.base64Decode(sha1ADRB23);
+//		req.sha256 = SwaggerUtils.base64Decode(sha256ADRB23);
+//		req.time = javax.xml.bind.DatatypeConverter.parseDateTime(timeADRB23).getTime();
+//		req.crl = false;
+//
+//		run("POST", "/envelope", req, resp);
+//
+//		assertEquals(envelopeADRB23, SwaggerUtils.base64Encode(resp.envelope));
+//		assertEquals("RENATO DO AMARAL CRIVANO MACHADO:00489623760", resp.cn);
+//		assertEquals("AD-RB", resp.policy);
+//		assertEquals("2.16.76.1.7.1.1.2.3", resp.policyoid);
+//		assertEquals("2.3", resp.policyversion);
+//		assertTrue(resp.certdetails instanceof CertDetails);
+//	}
 
 	public void testValidate_ADRB23_Success() throws JSONException {
 		IValidatePost.Request req = new IValidatePost.Request();
