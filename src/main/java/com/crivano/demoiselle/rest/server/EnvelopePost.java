@@ -5,15 +5,12 @@ import java.io.InputStream;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
-import org.bouncycastle.util.encoders.Base64;
 import org.demoiselle.signer.policy.engine.factory.PolicyFactory;
 import org.demoiselle.signer.policy.engine.factory.PolicyFactory.Policies;
 import org.demoiselle.signer.policy.impl.cades.SignerAlgorithmEnum;
 
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostResponse;
-import com.crivano.blucservice.api.IBlueCrystal.EnvelopePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.EnvelopePostResponse;
+import com.crivano.blucservice.api.BlueCrystalContext;
+import com.crivano.blucservice.api.IBlueCrystal.ICertificatePost;
 import com.crivano.blucservice.api.IBlueCrystal.IEnvelopePost;
 
 public class EnvelopePost implements IEnvelopePost {
@@ -24,7 +21,7 @@ public class EnvelopePost implements IEnvelopePost {
 	}
 
 	@Override
-	public void run(EnvelopePostRequest req, EnvelopePostResponse resp) throws Exception {
+	public void run(Request req, Response resp, BlueCrystalContext ctx) throws Exception {
 		if (!("AD-RB".equals(req.policy) || "PKCS#7".equals(req.policy)))
 			throw new Exception("Parameter 'policy' should be either 'AD-RB' or 'PKCS#7'");
 
@@ -35,9 +32,9 @@ public class EnvelopePost implements IEnvelopePost {
 		Policies policy = Policies.AD_RB_CADES_2_3;
 		resp.envelope = DemoiselleHelper.produceEnvelope(cert, req.sha256, SignerAlgorithmEnum.SHA256withRSA, policy,
 				req.time, req.signature);
-		
-		CertificatePostRequest certReq = new CertificatePostRequest();
-		CertificatePostResponse certResp = new CertificatePostResponse();
+
+		ICertificatePost.Request certReq = new ICertificatePost.Request();
+		ICertificatePost.Response certResp = new ICertificatePost.Response();
 		certReq.certificate = req.certificate;
 		CertificatePost.certDetails(certReq, certResp);
 		resp.certdetails = certResp.certdetails;
@@ -52,7 +49,8 @@ public class EnvelopePost implements IEnvelopePost {
 		String policyName = ValidatePost.recuperarNomePolitica(resp.policyoid);
 		resp.policy = policyName.split(" ")[0];
 		resp.policyversion = policyName.split(" ")[1].replace("v", "");
-		
+
 //		throw new RuntimeException("forced");
 	}
+
 }

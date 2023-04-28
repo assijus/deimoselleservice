@@ -6,9 +6,8 @@ import java.util.Map;
 import org.demoiselle.signer.core.extension.BasicCertificate;
 import org.demoiselle.signer.core.extension.CertificateExtra;
 
+import com.crivano.blucservice.api.BlueCrystalContext;
 import com.crivano.blucservice.api.IBlueCrystal.CertDetails;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostResponse;
 import com.crivano.blucservice.api.IBlueCrystal.ICertificatePost;
 import com.crivano.swaggerservlet.ISwaggerCacheableMethod;
 import com.crivano.swaggerservlet.Swagger;
@@ -21,12 +20,11 @@ public class CertificatePost implements ICertificatePost, ISwaggerCacheableMetho
 	}
 
 	@Override
-	public void run(CertificatePostRequest req, CertificatePostResponse resp) throws Exception {
+	public void run(Request req, Response resp, BlueCrystalContext ctx) throws Exception {
 		certDetails(req, resp);
 	}
 
-	public static void certDetails(CertificatePostRequest req, CertificatePostResponse resp)
-			throws Exception, IOException {
+	public static void certDetails(Request req, Response resp) throws Exception, IOException {
 		BasicCertificate cb = new BasicCertificate(req.certificate);
 		CertificateExtra ce = new CertificateExtra(cb.getX509Certificate());
 
@@ -49,4 +47,5 @@ public class CertificatePost implements ICertificatePost, ISwaggerCacheableMetho
 			Swagger.set(certdetails, key, map.get(key));
 		}
 	}
+
 }

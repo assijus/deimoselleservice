@@ -4,14 +4,10 @@ import org.json.JSONException;
 
 import com.crivano.blucservice.api.IBlueCrystal;
 import com.crivano.blucservice.api.IBlueCrystal.CertDetails;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostResponse;
-import com.crivano.blucservice.api.IBlueCrystal.EnvelopePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.EnvelopePostResponse;
-import com.crivano.blucservice.api.IBlueCrystal.HashPostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.HashPostResponse;
-import com.crivano.blucservice.api.IBlueCrystal.ValidatePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.ValidatePostResponse;
+import com.crivano.blucservice.api.IBlueCrystal.ICertificatePost;
+import com.crivano.blucservice.api.IBlueCrystal.IEnvelopePost;
+import com.crivano.blucservice.api.IBlueCrystal.IHashPost;
+import com.crivano.blucservice.api.IBlueCrystal.IValidatePost;
 import com.crivano.swaggerservlet.SwaggerTestSupport;
 import com.crivano.swaggerservlet.SwaggerUtils;
 
@@ -37,8 +33,8 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 	}
 
 	public void testCertificate_Simple_Success() throws JSONException {
-		CertificatePostRequest req = new CertificatePostRequest();
-		CertificatePostResponse resp = new CertificatePostResponse();
+		ICertificatePost.Request req = new ICertificatePost.Request();
+		ICertificatePost.Response resp = new ICertificatePost.Response();
 
 		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
 		run("POST", "/certificate", req, resp);
@@ -53,8 +49,8 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 	}
 
 	public void testCertificateADRB23_Simple_Success() throws JSONException {
-		CertificatePostRequest req = new CertificatePostRequest();
-		CertificatePostResponse resp = new CertificatePostResponse();
+		ICertificatePost.Request req = new ICertificatePost.Request();
+		ICertificatePost.Response resp = new ICertificatePost.Response();
 
 		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
 		run("POST", "/certificate", req, resp);
@@ -69,8 +65,8 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 	}
 
 	public void testHash_ADRB23_Success() throws JSONException {
-		HashPostRequest req = new HashPostRequest();
-		HashPostResponse resp = new HashPostResponse();
+		IHashPost.Request req = new IHashPost.Request();
+		IHashPost.Response resp = new IHashPost.Response();
 
 		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
 		req.policy = "AD-RB";
@@ -90,8 +86,8 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 	}
 
 	public void testEnvelope_ADRB23_Success() throws JSONException {
-		EnvelopePostRequest req = new EnvelopePostRequest();
-		EnvelopePostResponse resp = new EnvelopePostResponse();
+		IEnvelopePost.Request req = new IEnvelopePost.Request();
+		IEnvelopePost.Response resp = new IEnvelopePost.Response();
 
 		req.certificate = SwaggerUtils.base64Decode(certificateADRB23);
 		req.policy = "AD-RB";
@@ -112,8 +108,8 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 	}
 
 	public void testValidate_ADRB23_Success() throws JSONException {
-		ValidatePostRequest req = new ValidatePostRequest();
-		ValidatePostResponse resp = new ValidatePostResponse();
+		IValidatePost.Request req = new IValidatePost.Request();
+		IValidatePost.Response resp = new IValidatePost.Response();
 
 		setProperty("threadpool.size", "20");
 

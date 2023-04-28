@@ -9,10 +9,8 @@ import org.demoiselle.signer.policy.engine.factory.PolicyFactory;
 import org.demoiselle.signer.policy.engine.factory.PolicyFactory.Policies;
 import org.demoiselle.signer.policy.impl.cades.SignerAlgorithmEnum;
 
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.CertificatePostResponse;
-import com.crivano.blucservice.api.IBlueCrystal.HashPostRequest;
-import com.crivano.blucservice.api.IBlueCrystal.HashPostResponse;
+import com.crivano.blucservice.api.BlueCrystalContext;
+import com.crivano.blucservice.api.IBlueCrystal.ICertificatePost;
 import com.crivano.blucservice.api.IBlueCrystal.IHashPost;
 
 public class HashPost implements IHashPost {
@@ -23,7 +21,7 @@ public class HashPost implements IHashPost {
 	}
 
 	@Override
-	public void run(HashPostRequest req, HashPostResponse resp) throws Exception {
+	public void run(Request req, Response resp, BlueCrystalContext ctx) throws Exception {
 		if (!("AD-RB".equals(req.policy) || "PKCS#7".equals(req.policy)))
 			throw new Exception("Parameter 'policy' should be either 'AD-RB' or 'PKCS#7'");
 
@@ -35,8 +33,8 @@ public class HashPost implements IHashPost {
 		resp.hash = DemoiselleHelper.produceSignedAttributes(cert, req.sha256, SignerAlgorithmEnum.SHA256withRSA,
 				policy, req.time);
 
-		CertificatePostRequest certReq = new CertificatePostRequest();
-		CertificatePostResponse certResp = new CertificatePostResponse();
+		ICertificatePost.Request certReq = new ICertificatePost.Request();
+		ICertificatePost.Response certResp = new ICertificatePost.Response();
 		certReq.certificate = req.certificate;
 		CertificatePost.certDetails(certReq, certResp);
 		resp.certdetails = certResp.certdetails;
