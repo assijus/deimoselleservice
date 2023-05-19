@@ -17,11 +17,15 @@ import com.crivano.swaggerservlet.dependency.TestableDependency;
 public class DemoiselleServlet extends SwaggerServlet {
 	private static final long serialVersionUID = 1756711359239182178L;
 
+	static DemoiselleServlet INSTANCE = null;
+
 	@Override
 	public void initialize(ServletConfig config) throws ServletException {
+		INSTANCE = this;
 		setAPI(IBlueCrystal.class);
 		setActionPackage("com.crivano.demoiselle.rest.server");
 		addPublicProperty("threadpool.size", "20");
+		addPublicProperty("acrepo.provider.download.inmemory", "true");
 
 		class HttpGetDependency extends TestableDependency {
 			String testsite;
@@ -52,10 +56,15 @@ public class DemoiselleServlet extends SwaggerServlet {
 
 		addDependency(new SwaggerHttpGetDependency("network", "accaixajus", "http://lcr.caixa.gov.br/accaixajusv2.crl",
 				false, 0, 10000));
+
 	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
+	}
+
+	public static String getProp(String propertyName) {
+		return INSTANCE.getProperty(propertyName);
 	}
 }
