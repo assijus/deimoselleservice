@@ -10,6 +10,10 @@ import com.crivano.blucservice.api.IBlueCrystal.IHashPost;
 import com.crivano.blucservice.api.IBlueCrystal.IValidatePost;
 import com.crivano.swaggerservlet.SwaggerTestSupport;
 import com.crivano.swaggerservlet.SwaggerUtils;
+import org.mockito.Mockito;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 
 public class DemoiselleServiceTest extends SwaggerTestSupport {
 
@@ -32,7 +36,7 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 		return IBlueCrystal.class;
 	}
 
-	public void testCertificate_Simple_Success() throws JSONException {
+	public void testCertificate_Simple_Success() {
 		ICertificatePost.Request req = new ICertificatePost.Request();
 		ICertificatePost.Response resp = new ICertificatePost.Response();
 
@@ -48,7 +52,7 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 		assertEquals(resp.certdetails.cpf0, resp.cpf);
 	}
 
-	public void testCertificateADRB23_Simple_Success() throws JSONException {
+	public void testCertificateADRB23_Simple_Success() {
 		ICertificatePost.Request req = new ICertificatePost.Request();
 		ICertificatePost.Response resp = new ICertificatePost.Response();
 
@@ -106,7 +110,11 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 //		assertTrue(resp.certdetails instanceof CertDetails);
 //	}
 
-	public void testValidate_ADRB23_Success() throws JSONException {
+	public void testValidate_ADRB23_Success() throws ServletException {
+		DemoiselleServlet demoiselleServlet = new DemoiselleServlet();
+		ServletConfig sc = Mockito.mock(ServletConfig.class);
+		demoiselleServlet.initialize(sc);
+
 		IValidatePost.Request req = new IValidatePost.Request();
 		IValidatePost.Response resp = new IValidatePost.Response();
 
@@ -117,6 +125,7 @@ public class DemoiselleServiceTest extends SwaggerTestSupport {
 		req.sha256 = SwaggerUtils.base64Decode(sha256ADRB23);
 		req.time = javax.xml.bind.DatatypeConverter.parseDateTime(timeADRB23).getTime();
 		req.crl = false;
+
 		run("POST", "/validate", req, resp);
 
 		// TODO: trocar por "name"
