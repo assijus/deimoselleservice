@@ -13,6 +13,7 @@ import com.crivano.blucservice.api.IBlueCrystal.CertDetails;
 import com.crivano.blucservice.api.IBlueCrystal.IValidatePost;
 import com.crivano.swaggerservlet.ISwaggerCacheableMethod;
 import com.crivano.swaggerservlet.SwaggerException;
+import org.demoiselle.signer.policy.impl.cades.pkcs7.impl.CAdESChecker;
 
 public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 
@@ -23,14 +24,12 @@ public class ValidatePost implements IValidatePost, ISwaggerCacheableMethod {
 
 	@Override
 	public void run(Request req, Response resp, BlueCrystalContext ctx) throws Exception {
-		// Date dtSign = javax.xml.bind.DatatypeConverter.parseDateTime(time)
-		// .getTime();
 
 		Map<String, byte[]> hashes = new HashMap<>();
 		hashes.put(SignerAlgorithmEnum.SHA1withRSA.getOIDAlgorithmHash(), req.sha1);
 		hashes.put(SignerAlgorithmEnum.SHA256withRSA.getOIDAlgorithmHash(), req.sha256);
-//		hashes.put(SignerAlgorithmEnum.SHA512withRSA.getOIDAlgorithmHash(), calcSha512(fileToVerify));
-		List<SignatureInformations> signaturesInfo = DemoiselleHelper.checker.checkSignatureByHashes(hashes,
+
+		List<SignatureInformations> signaturesInfo = new CAdESChecker().checkSignatureByHashes(hashes,
 				req.envelope);
 
 		SignatureInformations si = signaturesInfo.get(0);
